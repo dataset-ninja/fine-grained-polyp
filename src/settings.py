@@ -20,7 +20,9 @@ HIDE_DATASET = True  # set False when 100% sure about repo quality
 ##################################
 # * After uploading to instance ##
 ##################################
-LICENSE: License = License.Unknown()
+LICENSE: License = License.Custom(
+    source_url="https://github.com/yaeltudela/polyp_ash?tab=readme-ov-file#research-use-only-license"
+)
 APPLICATIONS: List[Union[Industry, Domain, Research]] = [Industry.Medical()]
 CATEGORY: Category = Category.Medical(sensitive_content=True)
 
