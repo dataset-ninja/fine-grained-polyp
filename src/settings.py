@@ -27,12 +27,12 @@ APPLICATIONS: List[Union[Industry, Domain, Research]] = [Industry.Medical()]
 CATEGORY: Category = Category.Medical(sensitive_content=True)
 
 CV_TASKS: List[CVTask] = [
-    CVTask.InstanceSegmentation(),
     CVTask.SemanticSegmentation(),
     CVTask.ObjectDetection(),
+    CVTask.Classification(),
 ]
 ANNOTATION_TYPES: List[AnnotationType] = [
-    AnnotationType.InstanceSegmentation(),
+    AnnotationType.SemanticSegmentation(),
     AnnotationType.ObjectDetection(),
 ]
 
@@ -43,7 +43,7 @@ if RELEASE_DATE is None:
 HOMEPAGE_URL: str = "https://github.com/yaeltudela/polyp_ash"
 # e.g. "https://some.com/dataset/homepage"
 
-PREVIEW_IMAGE_ID: int = 13169263
+PREVIEW_IMAGE_ID: int = 13204744
 # This should be filled AFTER uploading images to instance, just ID of any image.
 
 GITHUB_URL: str = "https://github.com/dataset-ninja/fine-grained-polyp"
@@ -52,9 +52,9 @@ GITHUB_URL: str = "https://github.com/dataset-ninja/fine-grained-polyp"
 ##################################
 ### * Optional after uploading ###
 ##################################
-DOWNLOAD_ORIGINAL_URL: Optional[
-    Union[str, dict]
-] = "https://drive.google.com/file/d/1rmMLHohni3Vq_fZ-Ddt42vj6C6SSlkvW"
+DOWNLOAD_ORIGINAL_URL: Optional[Union[str, dict]] = (
+    "https://drive.google.com/file/d/1rmMLHohni3Vq_fZ-Ddt42vj6C6SSlkvW"
+)
 # Optional link for downloading original dataset (e.g. "https://some.com/dataset/download")
 
 CLASS2COLOR: Optional[Dict[str, List[str]]] = None
@@ -62,9 +62,9 @@ CLASS2COLOR: Optional[Dict[str, List[str]]] = None
 
 # If you have more than the one paper, put the most relatable link as the first element of the list
 # Use dict key to specify name for a button
-PAPER: Optional[
-    Union[str, List[str], Dict[str, str]]
-] = "https://link.springer.com/chapter/10.1007/978-3-031-45249-9_4"
+PAPER: Optional[Union[str, List[str], Dict[str, str]]] = (
+    "https://link.springer.com/chapter/10.1007/978-3-031-45249-9_4"
+)
 BLOGPOST: Optional[Union[str, List[str], Dict[str, str]]] = None
 REPOSITORY: Optional[Union[str, List[str], Dict[str, str]]] = None
 
@@ -87,7 +87,8 @@ ORGANIZATION_URL: Optional[Union[str, List[str]]] = None
 
 # Set '__PRETEXT__' or '__POSTTEXT__' as a key with string value to add custom text. e.g. SLYTAGSPLIT = {'__POSTTEXT__':'some text}
 SLYTAGSPLIT: Optional[Dict[str, Union[List[str], str]]] = {
-    "__POSTTEXT__": "Additionally, every image marked with its ***histologia*** and ***cls*** tag"
+    "cls": ["ad", "ass", "hp"],
+    "__POSTTEXT__": "Additionally, every image marked with its ***histologia*** tag",
 }
 TAGS: Optional[List[str]] = None
 

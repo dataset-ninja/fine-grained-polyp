@@ -76,18 +76,18 @@ def convert_and_upload_supervisely_project(
     api: sly.Api, workspace_id: int, project_name: str
 ) -> sly.ProjectInfo:
     ### Function should read local dataset and upload it to Supervisely project, then return project info.###
-    train_data_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_train/images"
-    val_data_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_valid/images"
-    test_data_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_test/images"
+    train_data_path = "/home/alex/DATASETS/TODO/polyp_ash/m_train/images"
+    val_data_path = "/home/alex/DATASETS/TODO/polyp_ash/m_valid/images"
+    test_data_path = "/home/alex/DATASETS/TODO/polyp_ash/m_test/images"
 
-    train_masks_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_train/masks"
-    train_tags_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_train/train.csv"
+    train_masks_path = "/home/alex/DATASETS/TODO/polyp_ash/m_train/masks"
+    train_tags_path = "/home/alex/DATASETS/TODO/polyp_ash/m_train/train.csv"
 
-    val_masks_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_valid/masks"
-    val_tags_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_valid/valid.csv"
+    val_masks_path = "/home/alex/DATASETS/TODO/polyp_ash/m_valid/masks"
+    val_tags_path = "/home/alex/DATASETS/TODO/polyp_ash/m_valid/valid.csv"
 
-    test_masks_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_test/masks"
-    test_tags_path = "/home/alex/DATASETS/TODO/polyp_ash/polyp_ash/m_test/test.csv"
+    test_masks_path = "/home/alex/DATASETS/TODO/polyp_ash/m_test/masks"
+    test_tags_path = "/home/alex/DATASETS/TODO/polyp_ash/m_test/test.csv"
 
     batch_size = 30
 
@@ -102,7 +102,8 @@ def convert_and_upload_supervisely_project(
 
         tags_data = image_name_to_tags[get_file_name(image_path)]
         histologia = sly.Tag(histologia_meta, value=tags_data[0])
-        cls_tag = sly.Tag(cls_meta, value=tags_data[1])
+        cls_meta = cls_to_meta.get(tags_data[1])
+        cls_tag = sly.Tag(cls_meta)
 
         mask_path = os.path.join(masks_path, get_file_name_with_ext(image_path))
         mask_np = sly.imaging.image.read(mask_path)[:, :, 0]
@@ -123,10 +124,17 @@ def convert_and_upload_supervisely_project(
     obj_class = sly.ObjClass("polyp", sly.Bitmap)
 
     histologia_meta = sly.TagMeta("histologia", sly.TagValueType.ANY_STRING)
-    cls_meta = sly.TagMeta("cls", sly.TagValueType.ANY_STRING)
+
+    ad_meta = sly.TagMeta("ad", sly.TagValueType.NONE)
+    ass_meta = sly.TagMeta("ass", sly.TagValueType.NONE)
+    hp_meta = sly.TagMeta("hp", sly.TagValueType.NONE)
+
+    cls_to_meta = {"AD": ad_meta, "ASS": ass_meta, "HP": hp_meta}
 
     project = api.project.create(workspace_id, project_name, change_name_if_conflict=True)
-    meta = sly.ProjectMeta(obj_classes=[obj_class], tag_metas=[histologia_meta, cls_meta])
+    meta = sly.ProjectMeta(
+        obj_classes=[obj_class], tag_metas=[histologia_meta, ad_meta, ass_meta, hp_meta]
+    )
     api.project.update_meta(project.id, meta.to_json())
 
     for ds_name, ds_data in ds_name_to_split.items():
