@@ -1,6 +1,6 @@
 Dataset **Fine Grained Polyp** can be downloaded in [Supervisely format](https://developer.supervisely.com/api-references/supervisely-annotation-json-format):
 
- [Download](https://assets.supervisely.com/supervisely-supervisely-assets-public/teams_storage/s/D/23/HdpkPXSIoBg1wZIdgLtWrl8C2hbyRP5ljGXul8ofAOavvBXTc0QiooAqOnjYP6A2IaCWUPvRvQginY8l0vHdgTxgT4n8WgGPkfFVDD7wgvYx0BFKnVAwCXzF97av.tar)
+ [Download](https://www.dropbox.com/scl/fi/mt4wwpd1nqt8ishbt5t3p/fine-grained-polyp-DatasetNinja.tar?rlkey=c30h6k1oijg1xjpcu5r0glhr9&dl=1)
 
 As an alternative, it can be downloaded with *dataset-tools* package:
 ``` bash
